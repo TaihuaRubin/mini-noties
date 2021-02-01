@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NotySingle from "./NotySingle";
 import { fetchNotifications } from "../redux/notifications";
+import { fetchFromLocalStorage } from "../redux/localStorage";
 import { Spinner, Jumbotron, Button } from "react-bootstrap";
 
 class Notifications extends Component {
@@ -26,6 +27,7 @@ class Notifications extends Component {
        *  as well as a message telling user that the data presented may not be up to date
        */
       if (this.props.loadSuccess === false) {
+        let localData = fetchFromLocalStorage();
         return (
           <div className='notifications-container'>
             <Jumbotron>
@@ -36,9 +38,7 @@ class Notifications extends Component {
               </p>
             </Jumbotron>
 
-            {this.props.notifications.map((notification, idx) => (
-              <NotySingle key={idx} notification={notification} />
-            ))}
+            {localData && localData.map((notification, idx) => <NotySingle key={idx} notification={notification} />)}
           </div>
         );
       }

@@ -68,24 +68,24 @@ export const fetchNotifications = (keyword) => async (dispatch) => {
     const { data } = await axios.get(
       `https://gnews.io/api/v4/search?lan=eng&q=${keyword}&token=${process.env.REACT_APP_API_KEY}`
     );
+
     const finishedReading = fetchHistoryFromLocalStorage();
 
     let payload = data["articles"];
+
     // check up to date
-    if (
-      payload[0]["article"] === fetchFromLocalStorage()[0]["article"] ||
-      finishedReading.includes(payload[0]["article"]["title"])
-    ) {
+    /*
+    if (payload[0]["article"] === fetchFromLocalStorage()[0]["article"]) {
       dispatch(checkRefresh(true));
     } else {
       dispatch(checkRefresh(false));
     }
 
-    // filter out already read articles
+    */
+    //filter out already read articles
     if (finishedReading) {
       payload = payload.filter((each) => !finishedReading.includes(each.title));
     }
-
     saveToLocalStorage(payload);
     dispatch(loadNotifications(payload));
   } catch (e) {
@@ -115,7 +115,7 @@ export default function notificationReducer(state = initialState, action) {
     case LOAD_ERROR:
       return {
         ...state,
-        notifications: [...state.notifications, ...action.notifications],
+        notifications: state.notifications,
         loading: false,
         loadSuccess: false,
       };
@@ -123,7 +123,7 @@ export default function notificationReducer(state = initialState, action) {
     case LOAD_NOTIFICATIONS:
       return {
         ...state,
-        notifications: [...state.notifications, ...action.notifications],
+        notifications: action.notifications,
         loading: false,
         loadSuccess: true,
       };

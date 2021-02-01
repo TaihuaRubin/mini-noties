@@ -31,7 +31,7 @@ function Header(props) {
   const gotNew = useSelector((state) => state.notificationReducer.uptodate);
   const handleRefresh = async () => {
     await dispatch(fetchNotifications("nonprofit"));
-    if (gotNew) alert("You're Up-to-Date! :) ");
+    if (!gotNew) alert("You're Up-to-Date! :) ");
   };
 
   return (

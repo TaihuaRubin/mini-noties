@@ -18,11 +18,17 @@ function SingleContent(props) {
         <p>{description}</p>
       </Modal.Body>
       <Modal.Footer className='modal-footer'>
-        <a onClick={() => dispatch(updateAsRead(title))} href={url} target='_blank'>
+        <a href={url} target='_blank'>
           <Button variant='warning' onClick={props.onHide}>
             Read at {source["name"]}
           </Button>
         </a>
+
+        {/* <a onClick={props.onHide} href={url} target='_blank'>
+          <Button variant='warning' onClick={() => dispatch(updateAsRead(title))}>
+            Read at {source["name"]}
+          </Button>
+        </a> */}
         <Button variant='warning' onClick={props.onHide}>
           Close
         </Button>
