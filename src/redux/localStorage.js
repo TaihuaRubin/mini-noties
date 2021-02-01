@@ -24,23 +24,24 @@ export function fetchFromLocalStorage() {
 export function saveHistoryToLocalStorage(title) {
   try {
     const localHistory = localStorage.getItem("minino-history");
-    if (localHistory === null) {
-      localStorage.setItem("minino-hisotry", JSON.stringify([title]));
+    if (localHistory === "") {
+      localStorage.setItem("minino-hisotry", [title]);
     } else {
-      localHistory = JSON.parse(localHistory).push(title);
+      localHistory.push(title);
+      // localHistory = JSON.stringify(localHistory);
       localStorage.setItem("minino-history", localHistory);
     }
   } catch (e) {
-    console.log("error trying to save history to local storage");
+    console.log(e);
   }
 }
 
 export function fetchHistoryFromLocalStorage() {
   try {
     const localHistory = localStorage.getItem("minino-history");
-    if (localHistory === null) return undefined;
-    return JSON.parse(localHistory);
+    if (localHistory === "null") return undefined;
+    return localHistory;
   } catch (e) {
-    console.log("error trying to fetch history from local storage");
+    console.log(e);
   }
 }
