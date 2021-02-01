@@ -74,14 +74,13 @@ export const fetchNotifications = (keyword) => async (dispatch) => {
     let payload = data["articles"];
 
     // check up to date
-    /*
+
     if (payload[0]["article"] === fetchFromLocalStorage()[0]["article"]) {
       dispatch(checkRefresh(true));
     } else {
       dispatch(checkRefresh(false));
     }
 
-    */
     //filter out already read articles
     if (finishedReading) {
       payload = payload.filter((each) => !finishedReading.includes(each.title));
