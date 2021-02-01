@@ -7,7 +7,7 @@ export function saveToLocalStorage(payload) {
     const serialisedPayload = JSON.stringify(payload);
     localStorage.setItem("minino", serialisedPayload);
   } catch (e) {
-    console.log("error trying to save to localStorage");
+    console.log(e);
   }
 }
 
@@ -17,20 +17,15 @@ export function fetchFromLocalStorage() {
     if (serialisedPayload === null) return undefined;
     return JSON.parse(serialisedPayload);
   } catch (e) {
-    console.log("error fetching form local storage");
+    console.log(e);
   }
 }
 
 export function saveHistoryToLocalStorage(title) {
   try {
-    const localHistory = localStorage.getItem("minino-history");
-    if (localHistory === "") {
-      localStorage.setItem("minino-hisotry", [title]);
-    } else {
-      localHistory.push(title);
-      // localHistory = JSON.stringify(localHistory);
-      localStorage.setItem("minino-history", localHistory);
-    }
+    const deserializedHistory = fetchHistoryFromLocalStorage();
+    deserializedHistory.push(title);
+    localStorage.setItem("minino-history", JSON.stringify(deserializedHistory));
   } catch (e) {
     console.log(e);
   }
@@ -38,9 +33,12 @@ export function saveHistoryToLocalStorage(title) {
 
 export function fetchHistoryFromLocalStorage() {
   try {
-    const localHistory = localStorage.getItem("minino-history");
-    if (localHistory === "null") return undefined;
-    return localHistory;
+    const serializedHistory = localStorage.getItem("minino-history");
+    if (!serializedHistory) {
+      return [];
+    } else {
+      return JSON.parse(serializedHistory);
+    }
   } catch (e) {
     console.log(e);
   }
