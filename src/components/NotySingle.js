@@ -11,7 +11,9 @@ function NotySingle(props) {
   return (
     <div className='noty-single-container'>
       <h5> {props.notification.title} </h5>
-      <p> Time: {props.notification.publishedAt}</p>
+      <p>
+        Date : {props.notification.publishedAt.slice(0, 10)} Time: {props.notification.publishedAt.slice(11, -1)}
+      </p>
 
       <ButtonToolbar>
         <ButtonGroup className='mr-2'>
