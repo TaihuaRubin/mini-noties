@@ -40,9 +40,10 @@ const loadNotifications = (notifications) => ({
   notifications,
 });
 
-const loadError = (error) => ({
+const loadError = (error, notifications) => ({
   type: LOAD_ERROR,
   error,
+  notifications,
 });
 
 const markRead = (title) => ({
@@ -70,7 +71,8 @@ export const fetchNotifications = (keyword) => async (dispatch) => {
     dispatch(loadNotifications(payload));
   } catch (e) {
     console.log(e);
-    dispatch(loadError());
+    let payload = fetchFromLocalStorage();
+    dispatch(loadError(e, payload));
   }
 };
 
@@ -94,6 +96,7 @@ export default function notificationReducer(state = initialState, action) {
     case LOAD_ERROR:
       return {
         ...state,
+        notifications: [...state.notifications, ...action.notifications],
         loading: false,
         loadSuccess: false,
       };
@@ -101,7 +104,7 @@ export default function notificationReducer(state = initialState, action) {
     case LOAD_NOTIFICATIONS:
       return {
         ...state,
-        notifications: action.notifications,
+        notifications: [...state.notifications, ...action.notifications],
         loading: false,
         loadSuccess: true,
       };

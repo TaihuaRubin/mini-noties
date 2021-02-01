@@ -10,6 +10,8 @@ class Notifications extends Component {
   }
 
   render() {
+    console.log(this.props, "props in NOtifications");
+
     /** Case: still loading */
     if (this.props.loading) {
       return <div> loading....</div>;
@@ -19,16 +21,14 @@ class Notifications extends Component {
        *  as well as a message telling user that the data presented may not be up to date
        */
       if (this.props.loadSuccess === false) {
-        let notifications = fetchFromLocalStorage();
         return (
           <div className='notifications-container'>
             <h3>
               Oops! We couldn't connect to the server... your notifications may not be the most up to date. (Dont worry!
               We're working on it.)
             </h3>
-            {notifications.map((notification, idx) => (
-              <NotySingle key={idx} notification={notification} />
-            ))}
+            {this.props.notification &&
+              this.props.notifications.map((notification, idx) => <NotySingle key={idx} notification={notification} />)}
           </div>
         );
       }
@@ -50,5 +50,6 @@ const mapStateToProps = (state) => ({
   loadSuccess: state.notificationReducer.loadSuccess,
   loading: state.notificationReducer.loading,
   notifications: state.notificationReducer.notifications,
+  history: state.notificationReducer.history,
 });
 export default connect(mapStateToProps, { fetchNotifications })(Notifications);
