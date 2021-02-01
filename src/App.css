@@ -21,3 +21,10 @@
   margin: 3vh;
   padding: 3vh;
 }
+
+#navButtons {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  margin-right: 10vh;
+}
