@@ -42,7 +42,6 @@ class Notifications extends Component {
       // if everything behaves normally
       return (
         <div className='notifications-container'>
-          <h2> Notifications</h2>
           {this.props.notifications.map((notification, idx) => (
             <NotySingle key={idx} notification={notification} />
           ))}

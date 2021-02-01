@@ -27,8 +27,8 @@ function Header(props) {
   return (
     <Navbar
       className='nav-bar-colors'
-      bg={scrollState === "top" ? "secondary" : "dark"}
-      variant={scrollState === "top" ? "light" : "dark"}
+      bg={scrollState === "top" ? "outline-secondary" : "dark"}
+      variant='dark'
       sticky='top'
     >
       <Navbar.Brand href='#home'>
