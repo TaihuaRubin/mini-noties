@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NotySingle from "./NotySingle";
 import { fetchNotifications } from "../redux/notifications";
-import { fetchFromLocalStorage } from "../redux/localStorage";
 import { Spinner, Jumbotron, Button } from "react-bootstrap";
 
 class Notifications extends Component {

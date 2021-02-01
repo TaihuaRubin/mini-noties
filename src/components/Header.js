@@ -31,7 +31,7 @@ function Header(props) {
       variant='dark'
       sticky='top'
     >
-      <Navbar.Brand href='#home'>
+      <Navbar.Brand>
         <img alt='' src={navLogo} height='50' className='d-inline-block align-top' />
       </Navbar.Brand>
 

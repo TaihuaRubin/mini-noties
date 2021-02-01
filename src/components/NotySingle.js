@@ -16,7 +16,7 @@ function NotySingle(props) {
       <ButtonToolbar>
         <ButtonGroup className='mr-2'>
           <Button variant='outline-warning' onClick={() => dispatch(updateAsRead(props.notification.title))}>
-            Archive
+            Delete
           </Button>
         </ButtonGroup>
         <Button variant='outline-warning' onClick={() => setModalShow(true)}>
