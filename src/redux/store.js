@@ -8,5 +8,4 @@ const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
 const store = createStore(reducer, middleware);
 
-console.log("im store state", store.getState());
 export default store;
