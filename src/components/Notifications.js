@@ -18,7 +18,7 @@ class Notifications extends Component {
       return (
         <div>
           <Spinner animation='border' role='status'>
-            <span className='sr-only'>Loading...</span>
+            <span className='sr-only'> Loading...</span>
           </Spinner>
           <p>loading....</p>
         </div>
