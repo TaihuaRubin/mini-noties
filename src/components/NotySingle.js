@@ -15,11 +15,11 @@ function NotySingle(props) {
 
       <ButtonToolbar>
         <ButtonGroup className='mr-2'>
-          <Button variant='outline-secondary' onClick={() => dispatch(updateAsRead(props.notification.title))}>
+          <Button variant='outline-warning' onClick={() => dispatch(updateAsRead(props.notification.title))}>
             Archive
           </Button>
         </ButtonGroup>
-        <Button variant='outline-info' onClick={() => setModalShow(true)}>
+        <Button variant='outline-warning' onClick={() => setModalShow(true)}>
           Open To Read More
         </Button>
       </ButtonToolbar>
