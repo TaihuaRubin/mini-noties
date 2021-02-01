@@ -7,18 +7,16 @@ import { Spinner } from "react-bootstrap";
 
 class Notifications extends Component {
   componentDidMount() {
-    this.props.fetchNotifications("tech");
+    this.props.fetchNotifications("nonprofit");
   }
 
   render() {
-    console.log(this.props, "props in NOtifications");
-
     /** Case: still loading */
     if (this.props.loading) {
       return (
         <div>
           <Spinner animation='border' role='status'>
-            <span className='sr-only'> Loading...</span>
+            <span className='sr-only'>Loading...</span>
           </Spinner>
           <p>loading....</p>
         </div>

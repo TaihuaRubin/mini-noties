@@ -1,14 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import { connect, useDispatch } from "react-redux";
-import { updateAsRead } from "../redux/notifications";
 import navLogo from "../img/navLogo.png";
 
 function Header(props) {
+  let listener = null;
+  const [scrollState, setScrollState] = useState("top");
+
+  useEffect(() => {
+    listener = document.addEventListener("scroll", (e) => {
+      var scrolled = document.scrollingElement.scrollTop;
+      if (scrolled >= 120) {
+        if (scrollState !== "amir") {
+          setScrollState("amir");
+        }
+      } else {
+        if (scrollState !== "top") {
+          setScrollState("top");
+        }
+      }
+    });
+    return () => {
+      document.removeEventListener("scroll", listener);
+    };
+  }, [scrollState]);
+
   return (
-    <Navbar bg='dark' variant='dark'>
+    <Navbar
+      className='nav-bar-colors'
+      bg={scrollState === "top" ? "secondary" : "dark"}
+      variant={scrollState === "top" ? "light" : "dark"}
+      sticky='top'
+    >
       <Navbar.Brand href='#home'>
-        <img alt='' src={navLogo} height='80' className='d-inline-block align-top' />
+        <img alt='' src={navLogo} height='50' className='d-inline-block align-top' />
       </Navbar.Brand>
 
       <Nav
