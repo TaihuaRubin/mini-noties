@@ -7,7 +7,7 @@
 }
 .notifications-container {
   display: flex;
-  padding-top: 10vh;
+  padding-top: 5vh;
   flex-direction: column;
   padding-bottom: 10vh;
   justify-content: space-around;
