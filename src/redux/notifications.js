@@ -1,5 +1,10 @@
 import axios from "axios";
-import { saveToLocalStorage, fetchFromLocalStorage } from "./localStorage";
+import {
+  saveToLocalStorage,
+  fetchFromLocalStorage,
+  saveHistoryToLocalStorage,
+  fetchHistoryFromLocalStorage,
+} from "./localStorage";
 /**
  * Action types
  */
@@ -32,6 +37,11 @@ const loadError = (error) => ({
   error,
 });
 
+const markRead = (title) => ({
+  type: MARK_READ,
+  title,
+});
+
 /**
  * Thunk Creators
  */
@@ -39,13 +49,27 @@ const loadError = (error) => ({
 export const fetchNotifications = (keyword) => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      `https://gnews.io/api/v4/search?q=${keyword}&token=${process.env.REACT_APP_API_KEY}`
+      `https://gnews.io/api/v4/search?lan=eng&q=${keyword}&token=${process.env.REACT_APP_API_KEY}`
     );
-    saveToLocalStorage(data["articles"]);
-    dispatch(loadNotifications(data["articles"]));
+    const payload = data["articles"];
+    const finishedReading = fetchHistoryFromLocalStorage();
+    if (finishedReading) {
+      payload = payload.filter((each) => !finishedReading.includes(each.title));
+    }
+    saveToLocalStorage(payload);
+    dispatch(loadNotifications(payload));
   } catch (e) {
     console.log(e);
     dispatch(loadError());
+  }
+};
+
+export const updateAsRead = (title) => async (dispatch) => {
+  try {
+    saveHistoryToLocalStorage(title);
+    dispatch(markRead(title));
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -68,6 +92,12 @@ export default function notificationReducer(state = initialState, action) {
         notifications: action.notifications,
         loading: false,
         loadSuccess: true,
+      };
+
+    case MARK_READ:
+      return {
+        ...state,
+        notifications: state.notifications.filter((each) => each.title !== action.title),
       };
 
     default:
