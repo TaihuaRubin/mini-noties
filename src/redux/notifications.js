@@ -12,10 +12,10 @@ import {
  * Action types
  */
 
-export const LOAD_NOTIFICATIONS = "LOAD_NOTIFICATIONS";
+const LOAD_NOTIFICATIONS = "LOAD_NOTIFICATIONS";
 const LOAD_ERROR = "LOAD_ERROR";
-export const MARK_READ = "MARK_READ";
-
+const MARK_READ = "MARK_READ";
+const CHECK_REFRESH = "CHECK_REFRESH";
 /*****************************************************/
 
 /**
@@ -27,6 +27,7 @@ const initialState = {
   history: fetchHistoryFromLocalStorage(),
   loading: true,
   loadSuccess: false,
+  uptodate: false,
 };
 
 /*****************************************************/
@@ -51,6 +52,11 @@ const markRead = (title) => ({
   title,
 });
 
+const checkRefresh = (bool) => ({
+  type: CHECK_REFRESH,
+  bool,
+});
+
 /*****************************************************/
 
 /**
@@ -62,11 +68,24 @@ export const fetchNotifications = (keyword) => async (dispatch) => {
     const { data } = await axios.get(
       `https://gnews.io/api/v4/search?lan=eng&q=${keyword}&token=${process.env.REACT_APP_API_KEY}`
     );
-    let payload = data["articles"];
     const finishedReading = fetchHistoryFromLocalStorage();
+
+    let payload = data["articles"];
+    // check up to date
+    if (
+      payload[0]["article"] === fetchFromLocalStorage()[0]["article"] ||
+      finishedReading.includes(payload[0]["article"]["title"])
+    ) {
+      dispatch(checkRefresh(true));
+    } else {
+      dispatch(checkRefresh(false));
+    }
+
+    // filter out already read articles
     if (finishedReading) {
       payload = payload.filter((each) => !finishedReading.includes(each.title));
     }
+
     saveToLocalStorage(payload);
     dispatch(loadNotifications(payload));
   } catch (e) {
@@ -114,6 +133,12 @@ export default function notificationReducer(state = initialState, action) {
         ...state,
         notifications: state.notifications.filter((each) => each.title !== action.title),
         history: [...state.history, action.title],
+      };
+
+    case CHECK_REFRESH:
+      return {
+        ...state,
+        uptodate: action.bool,
       };
 
     default:
