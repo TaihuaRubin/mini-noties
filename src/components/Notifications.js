@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import NotySingle from "./NotySingle";
 import { fetchNotifications } from "../redux/notifications";
 import { fetchFromLocalStorage } from "../redux/localStorage";
+import { Spinner } from "react-bootstrap";
 
 class Notifications extends Component {
   componentDidMount() {
@@ -14,7 +15,14 @@ class Notifications extends Component {
 
     /** Case: still loading */
     if (this.props.loading) {
-      return <div> loading....</div>;
+      return (
+        <div>
+          <Spinner animation='border' role='status'>
+            <span className='sr-only'>Loading...</span>
+          </Spinner>
+          <p>loading....</p>
+        </div>
+      );
     } else {
       /** Case: data fetch Unsucessful
        *  display data stored in localStorage

@@ -5,7 +5,6 @@ import { updateAsRead } from "../redux/notifications";
 import SingleContent from "./SingleContent";
 
 function NotySingle(props) {
-  // const { title, source, description, publishedAt } = props.notification;
   const [modalShow, setModalShow] = useState(false);
 
   const dispatch = useDispatch();

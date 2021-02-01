@@ -4,9 +4,7 @@ import { connect, useDispatch } from "react-redux";
 import { updateAsRead } from "../redux/notifications";
 
 function SingleContent(props) {
-  console.log("modal props", props);
-  const { title, description, content, publishedAt, source, ril } = props.content;
-  // const { name } = source; // author
+  const { title, description, content, publishedAt, source } = props.content;
 
   return (
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
