@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Modal, Button, ButtonGroup, ButtonToolbar } from "react-bootstrap";
-import { connect, useDispatch } from "react-redux";
+import { Button, ButtonGroup, ButtonToolbar } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { updateAsRead } from "../redux/notifications";
 import SingleContent from "./SingleContent";
 
@@ -22,7 +22,7 @@ function NotySingle(props) {
           </Button>
         </ButtonGroup>
         <Button variant='outline-warning' onClick={() => setModalShow(true)}>
-          Open To Read More
+          Peak 👀
         </Button>
       </ButtonToolbar>
       <SingleContent show={modalShow} onHide={() => setModalShow(false)} content={props.notification} />

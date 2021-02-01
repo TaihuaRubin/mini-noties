@@ -1,8 +1,10 @@
 import { Modal, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { updateAsRead } from "../redux/notifications";
 
 function SingleContent(props) {
-  console.log(props);
   const { title, description, content, publishedAt, source, url } = props.content;
+  const dispatch = useDispatch();
 
   return (
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
@@ -16,7 +18,7 @@ function SingleContent(props) {
         <p>{description}</p>
       </Modal.Body>
       <Modal.Footer className='modal-footer'>
-        <a href={url} target='_blank'>
+        <a onClick={() => dispatch(updateAsRead(title))} href={url} target='_blank'>
           <Button variant='warning' onClick={props.onHide}>
             Read at {source["name"]}
           </Button>
