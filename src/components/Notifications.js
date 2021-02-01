@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import NotySingle from "./NotySingle";
 import { fetchNotifications } from "../redux/notifications";
 import { fetchFromLocalStorage } from "../redux/localStorage";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Jumbotron, Button } from "react-bootstrap";
 
 class Notifications extends Component {
   componentDidMount() {
@@ -29,12 +29,17 @@ class Notifications extends Component {
       if (this.props.loadSuccess === false) {
         return (
           <div className='notifications-container'>
-            <h3>
-              Oops! We couldn't connect to the server... your notifications may not be the most up to date. (Dont worry!
-              We're working on it.)
-            </h3>
-            {this.props.notification &&
-              this.props.notifications.map((notification, idx) => <NotySingle key={idx} notification={notification} />)}
+            <Jumbotron>
+              <h1>Oooops!</h1>
+              <p>
+                We couldn't connect you to the server. Your notifications may not be the most up-to-date. But dont
+                worry, we are working on fixing it.
+              </p>
+            </Jumbotron>
+
+            {this.props.notifications.map((notification, idx) => (
+              <NotySingle key={idx} notification={notification} />
+            ))}
           </div>
         );
       }
