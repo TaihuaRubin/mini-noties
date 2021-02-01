@@ -1,13 +1,13 @@
-function NotySingle() {
+function NotySingle(props) {
+  // const { title, source, description, publishedAt } = props.notification;
+
   return (
     <div className='noty-single-container'>
-      <h2> Noty Single</h2>
-      <h3> Title: Im a title</h3>
-      <p>
-        I'm a paragraph jidjiej;lak sdjfiojdf;j alejfoai djsf;lakejfoaiejf; lkdjfoiej f;alks djfoijdf;alkfjeiojf
-        ;alkdfjijijf ijieji jfiejfij jdij ei;jalsdkfji o sej;lw ekjf;oisdjf;laskd jf;oaisdjf;alskdjf ;aoisdjf;alkds
-        fj;aoisdjf;als dijf;aoisdjf;aoisdjf;a
-      </p>
+      <h2> Title: {props.notification.title} </h2>
+      <h4> Author: {props.notification.source.name}</h4>
+      <p> Description: {props.notification.description} </p>
+      <p> Published At: {props.notification.publishedAt}</p>
+      <p> Publication: {props.notification.source.url}</p>
     </div>
   );
 }

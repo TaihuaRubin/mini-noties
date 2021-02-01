@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { saveToLocalStorage, fetchFromLocalStorage } from "./localStorage";
 /**
  * Action types
  */
@@ -41,7 +41,8 @@ export const fetchNotifications = (keyword) => async (dispatch) => {
     const { data } = await axios.get(
       `https://gnews.io/api/v4/search?q=${keyword}&token=${process.env.REACT_APP_API_KEY}`
     );
-    dispatch(loadNotifications(data));
+    saveToLocalStorage(data["articles"]);
+    dispatch(loadNotifications(data["articles"]));
   } catch (e) {
     console.log(e);
     dispatch(loadError());
